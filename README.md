@@ -40,12 +40,12 @@ cd ip-monitoring-system
 
 #### Добавить IP-адрес
   ```sh
-  curl -X POST http://localhost:9292/ips -H "Content-Type: application/json" -d '{"ip":"192.168.1.1","enabled":true}'
+  curl -X POST http://localhost:9292/ips -H "Content-Type: application/json" -d '{"ip":"8.8.8.8","enabled":true}'
   ```
 
 #### Получить статистику для IP-адреса
   ```sh
-  curl -X GET "http://localhost:9292/ips/1/stats?time_from=2023-01-01T00:00:00Z&time_to=2023-01-02T00:00:00Z"
+  curl -X GET "http://localhost:9292/ips/1/stats?time_from=2023-01-01T00:00:00Z&time_to=2025-01-02T00:00:00Z"
   ```
 
 ## Тестирование
