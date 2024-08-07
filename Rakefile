@@ -2,12 +2,13 @@ require 'sequel'
 require 'sequel/extensions/migration'
 require 'rake'
 require 'yaml'
+require 'erb'
 
 namespace :db do
   desc "Create the database"
   task :create do
     env = ENV['RACK_ENV'] || 'development'
-    erb_out = ERB.new('config/database.yml')).result
+    erb_out = ERB.new(File.read('config/database.yml')).result
     config = YAML.load(erb_out)[env]
 
     db_name = config['database']
