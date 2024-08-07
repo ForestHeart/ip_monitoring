@@ -23,6 +23,7 @@ services:
     environment:
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: password
+      POSTGRES_HOST: db
       POSTGRES_DB: ip_monitoring_test
 
   redis:

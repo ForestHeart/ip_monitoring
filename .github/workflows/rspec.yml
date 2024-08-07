@@ -17,6 +17,7 @@ jobs:
     services:
       postgres:
         image: postgres:13
+        options: --health-cmd pg_isready --health-interval 10s --health-timeout 5s --health-retries 5
         ports:
           - 5432:5432
         env:
@@ -52,11 +53,13 @@ jobs:
       - name: Setup Database
         env:
           RACK_ENV: test
+          POSTGRES_HOST: localhost
         run: bundle exec rake db:create db:migrate RACK_ENV=test
 
 
       - name: Run tests
         env:
           RACK_ENV: test
+          POSTGRES_HOST: localhost
         run: |
           bundle exec rspec

@@ -8,7 +8,7 @@ development:
 test:
   adapter: postgres
   database: ip_monitoring_test
-  host: db
+  host: <%= ENV['POSTGRES_HOST'] || db %>
   user: postgres
   password: password
 
