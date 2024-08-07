@@ -1,0 +1,62 @@
+name: CI RSpec Tests
+
+on:
+  push:
+    branches:
+      - main
+      - develop
+  pull_request:
+    branches:
+      - main
+      - develop
+
+jobs:
+  rspec-test:
+    runs-on: ubuntu-latest
+
+    services:
+      postgres:
+        image: postgres:13
+        ports:
+          - 5432:5432
+        env:
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: password
+          POSTGRES_DB: ip_monitoring_tests
+
+      redis:
+        image: redis:alpine
+        ports:
+          - 6379:6379
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Set up Ruby
+        uses: ruby/setup-ruby@v1
+        with:
+          # Not needed with a .ruby-version file
+          ruby-version: 3.2
+          # runs 'bundle install' and caches installed gems automatically
+          bundler-cache: true
+
+      - name: Install PostgreSQL
+        run: sudo apt-get -yqq install libpq-dev
+
+      - name: Run bundle install
+        run: |
+          gem install bundler
+          bundle install --jobs 4 --retry 3
+
+      - name: Setup Database
+        env:
+          RACK_ENV: test
+        run: bundle exec rake db:create db:migrate RACK_ENV=test
+
+
+      - name: Run tests
+        env:
+          RACK_ENV: test
+        run: |
+          bundle exec rspec
