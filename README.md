@@ -11,10 +11,10 @@
 
 ### Клонируйте репозиторий:
 
-    ```sh
-    git clone https://github.com/yourusername/ip-monitoring-system.git
-    cd ip-monitoring-system
-    ```
+```sh
+git clone https://github.com/yourusername/ip-monitoring-system.git
+cd ip-monitoring-system
+```
 
 ## Запуск
 
