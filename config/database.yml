@@ -1,14 +1,14 @@
 development:
   adapter: postgres
   database: ip_monitoring_development
-  host: db
+  host: <%= ENV['POSTGRES_HOST'] || 'db' %>
   user: postgres
   password: password
 
 test:
   adapter: postgres
   database: ip_monitoring_test
-  host: <%= ENV['POSTGRES_HOST'] || db %>
+  host: <%= ENV['POSTGRES_HOST'] || 'db' %>
   user: postgres
   password: password
 
