@@ -6,7 +6,10 @@ require 'yaml'
 namespace :db do
   desc "Create the database"
   task :create do
-    config = YAML.load_file('config/database.yml')['development']
+    env = ENV['RACK_ENV'] || 'development'
+    erb_out = ERB.new('config/database.yml')).result
+    config = YAML.load(erb_out)[env]
+
     db_name = config['database']
     db_user = config['user']
     db_password = config['password']
