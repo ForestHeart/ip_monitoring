@@ -1,0 +1,20 @@
+development:
+  adapter: postgres
+  database: ip_monitoring_development
+  host: db
+  user: postgres
+  password: password
+
+test:
+  adapter: postgres
+  database: ip_monitoring_test
+  host: db
+  user: postgres
+  password: password
+
+production:
+  adapter: postgres
+  database: ip_monitoring_production
+  host: db
+  user: postgres
+  password: password

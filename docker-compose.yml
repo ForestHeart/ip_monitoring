@@ -1,0 +1,48 @@
+version: '3.8'
+
+services:
+  app:
+    build: .
+    command: bundle exec puma -C config/puma.rb
+    volumes:
+      - .:/myapp
+    ports:
+      - "9292:9292"
+    depends_on:
+      - db
+      - redis
+    environment:
+      RACK_ENV: development
+
+  db:
+    image: postgres:13
+    ports:
+      - 5432:5432
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: ip_monitoring_development
+
+  redis:
+    image: redis:alpine
+    volumes:
+      - redis_data:/data
+
+  sidekiq:
+    build: .
+    command: bundle exec sidekiq -C ./config/sidekiq.yml -r ./config/initializer/sidekiq.rb
+    volumes:
+      - .:/myapp
+    depends_on:
+      - app
+      - db
+      - redis
+    environment:
+      REDIS_URL: redis://redis:6379/0
+      RACK_ENV: development
+
+volumes:
+  postgres_data:
+  redis_data:
