@@ -23,7 +23,7 @@ jobs:
         env:
           POSTGRES_USER: postgres
           POSTGRES_PASSWORD: password
-          POSTGRES_DB: ip_monitoring_tests
+          POSTGRES_DB: ip_monitoring_test
 
       redis:
         image: redis:alpine
