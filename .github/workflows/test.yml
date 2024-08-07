@@ -1,0 +1,29 @@
+name: Test
+
+on:
+  push:
+    branches:
+      - main
+      - develop
+  pull_request:
+    branches:
+      - main
+      - develop
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Set up Docker Compose Action
+        uses: adambirds/docker-compose-action@v1.3.0
+        with:
+          compose-file: ./docker-compose.test.yml
+
+      - name: Run tests
+        run: docker-compose -f docker-compose.test.yml run app bundle exec rspec
+        env:
+          DATABASE_URL: postgres://postgres:password@postgres:5432/ip_monitoring_test
+          REDIS_URL: redis://redis:6379/0
